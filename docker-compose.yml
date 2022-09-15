@@ -1,0 +1,25 @@
+services:
+  apache:
+    build: 
+      context: '.'
+      dockerfile: './.DockerFile'
+    volumes:
+      - './www:/var/www/html/'
+    ports:
+      - '80:80'
+    networks:
+      - 'app'
+  database:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ''
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+    ports:
+      - '3306:3306'
+    networks:
+      - 'app'
+
+networks:
+  app:
